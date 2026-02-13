@@ -1,0 +1,33 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-13T16:35:39.047Z",
+  "summary": "The diff implements a new Project Gallery section with 6 responsive images, relative asset paths, modal preview behavior, and updates header/footer navigation to scroll to the gallery. Two additional changes appear unrelated to the gallery request (UTM tracking code in Footer and an empty React Query hooks placeholder).",
+  "missing_requirements": [],
+  "hallucinated_features": [
+    {
+      "description": "Added UTM tracking/app identifier logic in the footer (hostname-based encodeURIComponent)",
+      "reason": "BuildRequest only asked to add a Project Gallery section and update navigation; tracking/UTM functionality was not requested and is not required for gallery placement or links.",
+      "evidence": [
+        "frontend/src/components/site/Footer.tsx (\"Generate app identifier for UTM tracking\")",
+        "frontend-file-summaries.txt (Footer description mentions \"UTM tracking\")"
+      ]
+    },
+    {
+      "description": "Added an empty placeholder React Query hooks file (useQueries.ts)",
+      "reason": "No requirement mentions React Query or adding placeholder hook files; the gallery is explicitly static and requires no backend/data hooks.",
+      "evidence": [
+        "frontend-file-summaries.txt (\"frontend/src/hooks/useQueries.ts\": \"Empty placeholder file for React Query hooks\")"
+      ]
+    }
+  ],
+  "confidence": 0.72,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/src/App.tsx",
+    "frontend/src/components/site/Footer.tsx",
+    "frontend/src/components/site/Header.tsx",
+    "frontend/src/components/site/ProjectGallerySection.tsx",
+    "project_state.json"
+  ]
+}

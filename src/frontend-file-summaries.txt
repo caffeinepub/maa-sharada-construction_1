@@ -1,0 +1,16 @@
+{
+  "frontend/index.html": "HTML entry point with relative script path ('./src/main.tsx') for deployment-safe module loading.",
+  "frontend/src/index.css": "Global styles with earthy construction-themed OKLCH color palette, typography hierarchy, background texture using relative path, and scroll-margin-top for sections to prevent sticky header overlap.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with construction-themed colors, custom fonts (Noto Sans Devanagari), and construction-specific shadow utilities.",
+  "frontend/src/App.tsx": "Main application component that composes Header, HeroSection, ServicesSection, ProjectGallerySection, ContactSection, and Footer into a single-page layout.",
+  "frontend/src/components/site/Header.tsx": "Sticky header with logo, company name, responsive navigation including gallery link, and smooth scroll-to-section functionality with mobile drawer close behavior.",
+  "frontend/src/components/site/HeroSection.tsx": "Hero section with background image (relative path), Hindi tagline, CTA buttons with scroll functionality, and quick stats display.",
+  "frontend/src/components/site/ServicesSection.tsx": "Services showcase section displaying six construction services (house building, boundary walls, tiles, doors, centering, electrical) in a responsive card grid with icons and feature lists.",
+  "frontend/src/components/site/ContactSection.tsx": "Contact information section with clickable phone numbers (tel:), email (mailto:), location with Google Maps link, and business hours in a card layout.",
+  "frontend/src/components/site/Footer.tsx": "Footer with company info, quick links including gallery, services, contact details, social media, and Caffeine.ai attribution with UTM tracking using relative logo path.",
+  "frontend/src/hooks/useQueries.ts": "Empty placeholder file for React Query hooks (no backend data requirements for this static site).",
+  "frontend/vite.config.ts": "Vite configuration with relative base path ('./') for IC deployment, React plugin, path aliases, and environment variable injection for canister IDs.",
+  "frontend/DEPLOYMENT.md": "Comprehensive deployment guide covering prerequisites, local development, IC mainnet deployment (manual and scripted), troubleshooting, and post-deployment verification steps.",
+  "frontend/scripts/publish-ic.sh": "Automated deployment script that builds and deploys the application to local or IC mainnet, with colored output, error handling, and final URL display.",
+  "frontend/src/components/site/ProjectGallerySection.tsx": "Project gallery section component displaying 6 construction project images in a responsive grid with click-to-preview modal dialog, ESC-to-close functionality, and construction-themed styling matching the site design."
+}

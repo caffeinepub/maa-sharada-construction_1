@@ -1,0 +1,63 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-add-a-new-project-gallery-section-to-the-single-page-site-to-showcase-completed-construction-projects-using-a-responsive-photo-grid",
+      "featureTitle": "Add a new \"Project Gallery\" section to the single-page site to showcase completed construction projects using a responsive photo grid.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/site/ProjectGallerySection.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-site-navigation-header-and-footer-quick-links-to-include-the-new-project-gallery-section-and-ensure-smooth-scroll-navigation-works-for-it-on-desktop-and-mobile",
+      "featureTitle": "Update site navigation (header and footer quick links) to include the new Project Gallery section and ensure smooth-scroll navigation works for it on desktop and mobile.",
+      "files": [
+        "frontend/src/components/site/Footer.tsx",
+        "frontend/src/components/site/Header.tsx",
+        "frontend/src/components/site/ProjectGallerySection.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-the-new-project-gallery-section-matches-the-existing-site-theme-spacing-typography-card-styles-and-hover-states-and-looks-good-on-mobile-and-desktop",
+      "featureTitle": "Ensure the new Project Gallery section matches the existing site theme (spacing, typography, card styles, and hover states) and looks good on mobile and desktop.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/site/ProjectGallerySection.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Project Gallery section for Maa Sharada Construction single-page site",
+  "requirements": [
+    {
+      "id": "REQ-8",
+      "summary": "Add a new Project Gallery section on the homepage with a responsive photo grid and in-page image preview modal.",
+      "acceptanceCriteria": [
+        "A new section is rendered on the homepage between Services and Contact (or another clearly intentional placement) and uses a stable section id (e.g., id=\"gallery\") so it can be navigated via scroll.",
+        "The gallery displays at least 6 project images in a responsive grid (1 column on small screens, increasing on larger breakpoints).",
+        "Clicking/tapping an image opens an in-page preview (modal/dialog or equivalent) with the larger image and a close control; ESC closes the preview.",
+        "All images have meaningful alt text and do not break layout while loading (use fixed aspect ratio containers and object-fit).",
+        "All gallery image src paths are relative and compatible with IC deployment (consistent with existing \"./assets/generated/...\" usage)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/site/ProjectGallerySection.tsx",
+          "operation": "create",
+          "description": "Create a new ProjectGallerySection component rendering a themed section with id=\"gallery\", heading + short description, and a responsive grid of 6 images. Use fixed-aspect-ratio containers with object-fit to prevent layout shifts while loading; implement an in-page preview modal with overlay + close button and ESC-to-close behavior. Ensure image src values use relative paths consistent with the site (e.g., ./assets/generated/...). Use shadcn-ui Card/Button styling patterns already used in the site to match theme. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the new ProjectGallerySection into the single-page layout between ServicesSection and ContactSection (or other clearly intentional placement) so it appears on the homepage and can be reached by scroll navigation."
+        },
+        {
+          "path": "frontend/public/assets/generated/maa-sharada-gallery-01.dim_1200x800.png",
+          "operation": "create",
+          "description": "Add generated gallery image asset for the Project Gallery section (static file referenced via relative src)."
+        },
+        {
+          "path": "frontend/public/assets/generated/maa-sharada-gallery-02.dim_1200x800.png",
+          "operation": "create",
+          "description": "Add generated gallery image asset for the Project Gallery section (static file referenced via relative src)."
+        },
+        {
+          "path": "frontend/public/assets/generated/maa-sharada-gallery-03.dim_1200x800.png",
+          "operation": "create",
+          "description": "Add generated gallery image asset for the Project Gallery section (static file referenced via relative src)."
+        },
+        {
+          "path": "frontend/public/assets/generated/maa-sharada-gallery-04.dim_1200x800.png",
+          "operation": "create",
+          "description": "Add generated gallery image asset for the Project Gallery section (static file referenced via relative src)."
+        },
+        {
+          "path": "frontend/public/assets/generated/maa-sharada-gallery-05.dim_1200x800.png",
+          "operation": "create",
+          "description": "Add generated gallery image asset for the Project Gallery section (static file referenced via relative src)."
+        },
+        {
+          "path": "frontend/public/assets/generated/maa-sharada-gallery-06.dim_1200x800.png",
+          "operation": "create",
+          "description": "Add generated gallery image asset for the Project Gallery section (static file referenced via relative src)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Update header and footer navigation to include smooth-scroll links to the Project Gallery section and preserve existing mobile drawer close behavior and header offset handling.",
+      "acceptanceCriteria": [
+        "Header navigation includes a new item that scrolls smoothly to the gallery section and closes the mobile drawer after selection (matching existing behavior).",
+        "Footer “Quick Links” includes a new link/button that scrolls smoothly to the gallery section (matching existing behavior).",
+        "After navigation to the gallery, the section heading is not hidden behind the sticky header (existing scroll-margin behavior continues to apply)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/site/Header.tsx",
+          "operation": "modify",
+          "description": "Add a new nav item for the gallery section (id \"gallery\") to both desktop and mobile navigation lists, using the existing smooth-scroll helper and ensuring the mobile drawer closes after selection (existing behavior)."
+        },
+        {
+          "path": "frontend/src/components/site/Footer.tsx",
+          "operation": "modify",
+          "description": "Add a new Footer Quick Link that smooth-scrolls to the gallery section (id \"gallery\") using the existing scrollToSection behavior."
+        },
+        {
+          "path": "frontend/src/components/site/ProjectGallerySection.tsx",
+          "operation": "modify",
+          "description": "Ensure the gallery section heading is not hidden behind the sticky header after smooth-scroll by applying an appropriate scroll-margin-top utility/class consistent with other sections’ behavior. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Match the new Project Gallery section styling to the existing construction-themed design system and prevent regressions across the page.",
+      "acceptanceCriteria": [
+        "Gallery section styling is consistent with the existing construction-themed design system (Tailwind tokens, border/shadow patterns similar to other sections).",
+        "The section includes a clear heading and short description consistent with other sections’ structure and spacing.",
+        "No regressions to existing sections (Hero, Services, Contact, Footer) and the page remains visually coherent end-to-end."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/site/ProjectGallerySection.tsx",
+          "operation": "modify",
+          "description": "Align spacing, typography, card borders/shadows, and hover states with existing sections (e.g., Services/Contact card patterns and hover shadow-construction). Ensure the section layout looks good on mobile/desktop and integrates coherently with surrounding sections. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Adjust section ordering/spacing only as needed to keep the overall page visually coherent after inserting the new gallery section (no content changes to existing sections)."
+        }
+      ]
+    }
+  ]
+}
