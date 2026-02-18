@@ -2,18 +2,154 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-a-new-project-gallery-section-to-the-single-page-site-to-showcase-completed-construction-projects-using-a-responsive-photo-grid",
-      "featureTitle": "Add a new \"Project Gallery\" section to the single-page site to showcase completed construction projects using a responsive photo grid.",
+      "featureId": "feature-replace-the-current-construction-company-single-page-website-ui-with-a-new-smartwatch-data-extension-application-ui-that-uses-english-for-all-user-facing-text",
+      "featureTitle": "Replace the current construction-company single-page website UI with a new smartwatch data extension application UI that uses English for all user-facing text.",
       "files": [
         "frontend/src/App.tsx",
-        "frontend/src/components/site/ProjectGallerySection.tsx"
+        "frontend/src/components/auth/AuthGate.tsx",
+        "frontend/src/components/auth/ProfileSetupDialog.tsx",
+        "frontend/src/components/site/ContactSection.tsx",
+        "frontend/src/components/site/Footer.tsx",
+        "frontend/src/components/site/Header.tsx",
+        "frontend/src/components/site/HeroSection.tsx",
+        "frontend/src/components/site/ProjectGallerySection.tsx",
+        "frontend/src/components/site/ServicesSection.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-smartwatch-data-import-flow-that-allows-a-user-to-upload-a-data-export-file-csv-and-json-in-the-browser-validates-it-and-previews-parsed-records-before-saving",
+      "featureTitle": "Implement a smartwatch data import flow that allows a user to upload a data export file (CSV and JSON) in the browser, validates it, and previews parsed records before saving.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/features/import/ImportPage.tsx",
+        "frontend/src/features/import/ImportPreviewTable.tsx",
+        "frontend/src/hooks/useSmartwatchDatasets.ts",
+        "frontend/src/lib/smartwatch/importParsers.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-define-and-implement-a-minimal-safe-data-model-for-smartwatch-records-that-supports-common-metrics-and-remains-extensible-e-g-timestamp-plus-optional-fields-like-steps-heartrate-calories-distance-sleep",
+      "featureTitle": "Define and implement a minimal, safe data model for smartwatch records that supports common metrics and remains extensible (e.g., timestamp plus optional fields like steps, heartRate, calories, distance, sleep).",
+      "files": [
+        "frontend/src/features/import/ImportPage.tsx",
+        "frontend/src/lib/smartwatch/fieldMapping.ts",
+        "frontend/src/lib/smartwatch/model.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-dashboard-that-computes-and-displays-extended-derived-metrics-from-the-imported-data-e-g-daily-totals-averages-min-max-for-heart-rate-step-totals-by-day-and-allows-filtering-by-date-range",
+      "featureTitle": "Create a dashboard that computes and displays “extended” (derived) metrics from the imported data (e.g., daily totals, averages, min/max for heart rate, step totals by day) and allows filtering by date range.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/features/dashboard/DashboardPage.tsx",
+        "frontend/src/lib/smartwatch/analytics.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-export-feature-that-lets-the-user-download-the-extended-normalized-dataset-as-a-json-file-from-the-browser-no-external-services",
+      "featureTitle": "Add an export feature that lets the user download the extended/normalized dataset as a JSON file from the browser (no external services).",
+      "files": [
+        "frontend/src/features/datasets/DatasetDetailsPage.tsx",
+        "frontend/src/lib/smartwatch/exportJson.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-basic-dataset-management-ui-list-datasets-view-details-for-a-selected-dataset-records-summary-and-delete-a-dataset-with-confirmation",
+      "featureTitle": "Add basic dataset management UI: list datasets, view details for a selected dataset (records + summary), and delete a dataset with confirmation.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/features/datasets/DatasetDetailsPage.tsx",
+        "frontend/src/features/datasets/DatasetsPage.tsx",
+        "frontend/src/hooks/useSmartwatchDatasets.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-coherent-visual-theme-suitable-for-a-health-fitness-data-product-consistent-colors-typography-spacing-and-components-and-use-it-across-all-new-screens",
+      "featureTitle": "Apply a coherent visual theme suitable for a health/fitness data product (consistent colors, typography, spacing, and components) and use it across all new screens.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
       ],
       "testIds": [
         "REQ-8"
@@ -21,41 +157,22 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-update-site-navigation-header-and-footer-quick-links-to-include-the-new-project-gallery-section-and-ensure-smooth-scroll-navigation-works-for-it-on-desktop-and-mobile",
-      "featureTitle": "Update site navigation (header and footer quick links) to include the new Project Gallery section and ensure smooth-scroll navigation works for it on desktop and mobile.",
+      "featureId": "feature-add-required-generated-images-to-the-project-and-render-them-in-the-ui-as-static-assets-from-frontend-public-assets-generated",
+      "featureTitle": "Add required generated images to the project and render them in the UI as static assets from frontend/public/assets/generated.",
       "files": [
-        "frontend/src/components/site/Footer.tsx",
         "frontend/src/components/site/Header.tsx",
-        "frontend/src/components/site/ProjectGallerySection.tsx"
+        "frontend/src/features/import/ImportPage.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
       ],
       "testIds": [
         "REQ-9"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-ensure-the-new-project-gallery-section-matches-the-existing-site-theme-spacing-typography-card-styles-and-hover-states-and-looks-good-on-mobile-and-desktop",
-      "featureTitle": "Ensure the new Project Gallery section matches the existing site theme (spacing, typography, card styles, and hover states) and looks good on mobile and desktop.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/site/ProjectGallerySection.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-10"
       ],
       "confidence": "high"
     }

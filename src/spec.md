@@ -1,13 +1,16 @@
 # Specification
 
 ## Summary
-**Goal:** Add a Project Gallery section to the Maa Sharada Construction single-page website to showcase completed projects with a responsive grid and in-page image preview.
+**Goal:** Repurpose the existing site into “Smartwatch Data Hub,” a smartwatch data import, storage, and analytics web app with all UI text in English.
 
 **Planned changes:**
-- Add a new “Project Gallery” section on the homepage (with a stable section id such as `gallery`), placed between Services and Contact (or another clearly intentional location).
-- Display at least 6 project images in a responsive photo grid with fixed aspect-ratio containers, object-fit styling, and meaningful alt text.
-- Enable clicking/tapping a gallery image to open a larger in-page preview (modal/dialog) with close control and ESC-to-close behavior.
-- Update header navigation and footer “Quick Links” to include smooth-scroll navigation to the Project Gallery section (including closing the mobile menu after selection and preserving scroll offset behavior under the sticky header).
-- Match existing site theme for spacing, typography, card styles, and hover states while avoiding regressions to current sections.
+- Replace the construction single-page UI/branding and gallery with new app navigation and screens for Import, Dashboard, Datasets/Records, and Export.
+- Implement an in-browser import flow for CSV/JSON uploads with file-type/malformed-content validation, record parsing, and a preview table before saving.
+- Add per-user (Internet Identity Principal) backend storage for datasets (metadata + records) with create/list/fetch/delete and stable persistence.
+- Define an extensible smartwatch record model (timestamp required; optional common metrics like steps/heartRate/calories/distance/sleep; plus additional key/value fields) and map imported fields with unmapped-field flags.
+- Build a dashboard that computes derived metrics (e.g., totals/averages/min/max) with date-range filtering and graceful handling of missing metrics.
+- Add dataset management UI to list datasets, view dataset details (summary + records table/preview), and delete with confirmation.
+- Add browser-based export to download a normalized/extended dataset JSON including metadata (and derived fields if computed).
+- Apply a consistent health/fitness visual theme across all screens and reference new generated images as static assets from `frontend/public/assets/generated`.
 
-**User-visible outcome:** Visitors can scroll to a new Project Gallery section from the header/footer links, browse a responsive grid of project photos, and open any image in a larger in-page preview that can be closed via a button or ESC.
+**User-visible outcome:** Users can sign in, upload smartwatch CSV/JSON exports, preview and save datasets, view/manage saved datasets, see derived health metrics with date filtering, and export normalized data to a JSON file.

@@ -1,85 +1,214 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-13T16:35:39.050Z",
+  "generatedAt": "2026-02-18T06:57:52.225Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 3,
-    "implemented": 3,
+    "total": 9,
+    "implemented": 8,
     "items": [
       {
-        "id": "REQ-10",
-        "summary": "Ensure the new Project Gallery section matches the existing site theme (spacing, typography, card styles, and hover states) and looks good on mobile and desktop.",
+        "id": "REQ-1",
+        "summary": "Replace the current construction-company single-page website UI with a new smartwatch data extension application UI that uses English for all user-facing text.",
         "status": "implemented",
         "plannedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/site/Header.tsx",
+          "frontend/src/components/site/HeroSection.tsx",
+          "frontend/src/components/site/ServicesSection.tsx",
           "frontend/src/components/site/ProjectGallerySection.tsx",
+          "frontend/src/components/site/ContactSection.tsx",
+          "frontend/src/components/site/Footer.tsx",
+          "frontend/src/components/auth/AuthGate.tsx",
+          "frontend/src/components/auth/ProfileSetupDialog.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/site/Header.tsx",
+          "frontend/src/components/site/HeroSection.tsx",
+          "frontend/src/components/site/ServicesSection.tsx",
+          "frontend/src/components/site/ProjectGallerySection.tsx",
+          "frontend/src/components/site/ContactSection.tsx",
+          "frontend/src/components/site/Footer.tsx",
+          "frontend/src/components/auth/AuthGate.tsx",
+          "frontend/src/components/auth/ProfileSetupDialog.tsx"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Implement a smartwatch data import flow that allows a user to upload a data export file (CSV and JSON) in the browser, validates it, and previews parsed records before saving.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/features/import/ImportPage.tsx",
+          "frontend/src/lib/smartwatch/importParsers.ts",
+          "frontend/src/hooks/useSmartwatchDatasets.ts",
+          "frontend/src/features/import/ImportPreviewTable.tsx",
           "frontend/src/App.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/site/ProjectGallerySection.tsx",
+          "frontend/src/features/import/ImportPage.tsx",
+          "frontend/src/lib/smartwatch/importParsers.ts",
+          "frontend/src/hooks/useSmartwatchDatasets.ts",
+          "frontend/src/features/import/ImportPreviewTable.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Add backend storage for imported smartwatch datasets per authenticated user (Internet Identity Principal), including dataset metadata (name, upload time, original format) and the imported records.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Define and implement a minimal, safe data model for smartwatch records that supports common metrics and remains extensible (e.g., timestamp plus optional fields like steps, heartRate, calories, distance, sleep).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/lib/smartwatch/model.ts",
+          "frontend/src/lib/smartwatch/fieldMapping.ts",
+          "frontend/src/features/import/ImportPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/lib/smartwatch/model.ts",
+          "frontend/src/lib/smartwatch/fieldMapping.ts",
+          "frontend/src/features/import/ImportPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Create a dashboard that computes and displays “extended” (derived) metrics from the imported data (e.g., daily totals, averages, min/max for heart rate, step totals by day) and allows filtering by date range.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/features/dashboard/DashboardPage.tsx",
+          "frontend/src/lib/smartwatch/analytics.ts",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/features/dashboard/DashboardPage.tsx",
+          "frontend/src/lib/smartwatch/analytics.ts",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-6",
+        "summary": "Add an export feature that lets the user download the extended/normalized dataset as a JSON file from the browser (no external services).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/lib/smartwatch/exportJson.ts",
+          "frontend/src/features/datasets/ExportDatasetButton.tsx",
+          "frontend/src/features/datasets/DatasetDetailsPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/lib/smartwatch/exportJson.ts",
+          "frontend/src/features/datasets/DatasetDetailsPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-7",
+        "summary": "Add basic dataset management UI: list datasets, view details for a selected dataset (records + summary), and delete a dataset with confirmation.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/features/datasets/DatasetsPage.tsx",
+          "frontend/src/features/datasets/DatasetDetailsPage.tsx",
+          "frontend/src/features/datasets/DeleteDatasetDialog.tsx",
+          "frontend/src/hooks/useSmartwatchDatasets.ts",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/features/datasets/DatasetsPage.tsx",
+          "frontend/src/features/datasets/DatasetDetailsPage.tsx",
+          "frontend/src/hooks/useSmartwatchDatasets.ts",
           "frontend/src/App.tsx"
         ]
       },
       {
         "id": "REQ-8",
-        "summary": "Add a new \"Project Gallery\" section to the single-page site to showcase completed construction projects using a responsive photo grid.",
+        "summary": "Apply a coherent visual theme suitable for a health/fitness data product (consistent colors, typography, spacing, and components) and use it across all new screens.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/site/ProjectGallerySection.tsx",
-          "frontend/src/App.tsx",
-          "frontend/public/assets/generated/maa-sharada-gallery-01.dim_1200x800.png",
-          "frontend/public/assets/generated/maa-sharada-gallery-02.dim_1200x800.png",
-          "frontend/public/assets/generated/maa-sharada-gallery-03.dim_1200x800.png",
-          "frontend/public/assets/generated/maa-sharada-gallery-04.dim_1200x800.png",
-          "frontend/public/assets/generated/maa-sharada-gallery-05.dim_1200x800.png",
-          "frontend/public/assets/generated/maa-sharada-gallery-06.dim_1200x800.png"
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/components/layout/AppLayout.tsx",
+          "frontend/src/App.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/site/ProjectGallerySection.tsx",
-          "frontend/src/App.tsx",
-          "frontend/public/assets/generated/maa-sharada-gallery-01.dim_1200x800.png",
-          "frontend/public/assets/generated/maa-sharada-gallery-02.dim_1200x800.png",
-          "frontend/public/assets/generated/maa-sharada-gallery-03.dim_1200x800.png",
-          "frontend/public/assets/generated/maa-sharada-gallery-04.dim_1200x800.png",
-          "frontend/public/assets/generated/maa-sharada-gallery-05.dim_1200x800.png",
-          "frontend/public/assets/generated/maa-sharada-gallery-06.dim_1200x800.png"
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/App.tsx"
         ]
       },
       {
         "id": "REQ-9",
-        "summary": "Update site navigation (header and footer quick links) to include the new Project Gallery section and ensure smooth-scroll navigation works for it on desktop and mobile.",
+        "summary": "Add required generated images to the project and render them in the UI as static assets from frontend/public/assets/generated.",
         "status": "implemented",
         "plannedFiles": [
+          "frontend/public/assets/generated/smartwatch-datahub-logo.dim_512x512.png",
+          "frontend/public/assets/generated/smartwatch-datahub-hero.dim_1600x900.png",
           "frontend/src/components/site/Header.tsx",
-          "frontend/src/components/site/Footer.tsx",
-          "frontend/src/components/site/ProjectGallerySection.tsx"
+          "frontend/src/features/import/ImportPage.tsx",
+          "frontend/public/assets/generated/maa-sharada-logo.dim_512x512.png",
+          "frontend/public/assets/generated/maa-sharada-hero.dim_1600x900.png",
+          "frontend/public/assets/generated/maa-sharada-texture.dim_1024x1024.png",
+          "frontend/public/assets/generated/maa-sharada-gallery-01.dim_1200x800.png",
+          "frontend/public/assets/generated/maa-sharada-gallery-02.dim_1200x800.png",
+          "frontend/public/assets/generated/maa-sharada-gallery-03.dim_1200x800.png",
+          "frontend/public/assets/generated/maa-sharada-gallery-04.dim_1200x800.png",
+          "frontend/public/assets/generated/maa-sharada-gallery-05.dim_1200x800.png",
+          "frontend/public/assets/generated/maa-sharada-gallery-06.dim_1200x800.png"
         ],
         "matchedFiles": [
+          "frontend/public/assets/generated/smartwatch-datahub-logo.dim_512x512.png",
+          "frontend/public/assets/generated/smartwatch-datahub-hero.dim_1600x900.png",
           "frontend/src/components/site/Header.tsx",
-          "frontend/src/components/site/Footer.tsx",
-          "frontend/src/components/site/ProjectGallerySection.tsx"
+          "frontend/src/features/import/ImportPage.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
+    "backend/authorization/MixinAuthorization.mo",
+    "backend/authorization/access-control.mo",
+    "backend/main.mo",
     "build-request.json",
+    "caffeine.lock.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/public/assets/generated/maa-sharada-gallery-01.dim_1200x800.png",
-    "frontend/public/assets/generated/maa-sharada-gallery-02.dim_1200x800.png",
-    "frontend/public/assets/generated/maa-sharada-gallery-03.dim_1200x800.png",
-    "frontend/public/assets/generated/maa-sharada-gallery-04.dim_1200x800.png",
-    "frontend/public/assets/generated/maa-sharada-gallery-05.dim_1200x800.png",
-    "frontend/public/assets/generated/maa-sharada-gallery-06.dim_1200x800.png",
+    "frontend/public/assets/generated/smartwatch-datahub-hero.dim_1600x900.png",
+    "frontend/public/assets/generated/smartwatch-datahub-logo.dim_512x512.png",
     "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/auth/AuthGate.tsx",
+    "frontend/src/components/auth/ProfileSetupDialog.tsx",
+    "frontend/src/components/site/ContactSection.tsx",
     "frontend/src/components/site/Footer.tsx",
     "frontend/src/components/site/Header.tsx",
+    "frontend/src/components/site/HeroSection.tsx",
     "frontend/src/components/site/ProjectGallerySection.tsx",
+    "frontend/src/components/site/ServicesSection.tsx",
+    "frontend/src/config.ts",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/features/dashboard/DashboardPage.tsx",
+    "frontend/src/features/datasets/DatasetDetailsPage.tsx",
+    "frontend/src/features/datasets/DatasetsPage.tsx",
+    "frontend/src/features/import/ImportPage.tsx",
+    "frontend/src/features/import/ImportPreviewTable.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useSmartwatchDatasets.ts",
+    "frontend/src/index.css",
+    "frontend/src/lib/smartwatch/analytics.ts",
+    "frontend/src/lib/smartwatch/exportJson.ts",
+    "frontend/src/lib/smartwatch/fieldMapping.ts",
+    "frontend/src/lib/smartwatch/importParsers.ts",
+    "frontend/src/lib/smartwatch/model.ts",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

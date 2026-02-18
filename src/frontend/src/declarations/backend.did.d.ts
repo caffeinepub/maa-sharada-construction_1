@@ -10,7 +10,42 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
-export interface _SERVICE {}
+export interface SmartwatchDataset {
+  'records' : Array<SmartwatchRecord>,
+  'originalFormat' : string,
+  'name' : string,
+  'uploadTime' : Time,
+}
+export interface SmartwatchRecord {
+  'calories' : [] | [number],
+  'distance' : [] | [number],
+  'sleep' : [] | [bigint],
+  'steps' : [] | [bigint],
+  'heartRate' : [] | [bigint],
+  'timestamp' : Time,
+}
+export type Time = bigint;
+export interface UserProfile { 'name' : string }
+export type UserRole = { 'admin' : null } |
+  { 'user' : null } |
+  { 'guest' : null };
+export interface _SERVICE {
+  '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
+  'addSmartwatchDataset' : ActorMethod<[SmartwatchDataset], undefined>,
+  'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
+  'filterDatasetsByMetric' : ActorMethod<
+    [string, [] | [number], [] | [number]],
+    Array<SmartwatchDataset>
+  >,
+  'getAllUserDatasets' : ActorMethod<[], Array<SmartwatchDataset>>,
+  'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
+  'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getMyDatasets' : ActorMethod<[], Array<SmartwatchDataset>>,
+  'getUserDatasets' : ActorMethod<[Principal], Array<SmartwatchDataset>>,
+  'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
+  'isCallerAdmin' : ActorMethod<[], boolean>,
+  'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+}
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];
 export declare const idlFactory: IDL.InterfaceFactory;

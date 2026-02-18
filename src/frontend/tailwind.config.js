@@ -16,8 +16,8 @@ export default {
         },
         extend: {
             fontFamily: {
-                sans: ['Noto Sans Devanagari', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
-                heading: ['Noto Sans Devanagari', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                heading: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
             },
             colors: {
                 border: 'oklch(var(--border))',
@@ -39,7 +39,7 @@ export default {
                 },
                 muted: {
                     DEFAULT: 'oklch(var(--muted) / <alpha-value>)',
-                    foreground: 'oklch(var(--muted-foreground) / <alpha-value>)'
+                    foreground: 'oklch(var(--muted-foreground))'
                 },
                 accent: {
                     DEFAULT: 'oklch(var(--accent) / <alpha-value>)',
@@ -53,13 +53,6 @@ export default {
                     DEFAULT: 'oklch(var(--card))',
                     foreground: 'oklch(var(--card-foreground))'
                 },
-                chart: {
-                    1: 'oklch(var(--chart-1))',
-                    2: 'oklch(var(--chart-2))',
-                    3: 'oklch(var(--chart-3))',
-                    4: 'oklch(var(--chart-4))',
-                    5: 'oklch(var(--chart-5))'
-                },
                 sidebar: {
                     DEFAULT: 'oklch(var(--sidebar))',
                     foreground: 'oklch(var(--sidebar-foreground))',
@@ -69,6 +62,13 @@ export default {
                     'accent-foreground': 'oklch(var(--sidebar-accent-foreground))',
                     border: 'oklch(var(--sidebar-border))',
                     ring: 'oklch(var(--sidebar-ring))'
+                },
+                chart: {
+                    '1': 'oklch(var(--chart-1))',
+                    '2': 'oklch(var(--chart-2))',
+                    '3': 'oklch(var(--chart-3))',
+                    '4': 'oklch(var(--chart-4))',
+                    '5': 'oklch(var(--chart-5))'
                 }
             },
             borderRadius: {
@@ -77,25 +77,10 @@ export default {
                 sm: 'calc(var(--radius) - 4px)'
             },
             boxShadow: {
-                xs: '0 1px 2px 0 rgba(0,0,0,0.05)',
-                'construction': '0 4px 6px -1px rgba(139, 69, 19, 0.1), 0 2px 4px -1px rgba(139, 69, 19, 0.06)',
-            },
-            keyframes: {
-                'accordion-down': {
-                    from: { height: '0' },
-                    to: { height: 'var(--radix-accordion-content-height)' }
-                },
-                'accordion-up': {
-                    from: { height: 'var(--radix-accordion-content-height)' },
-                    to: { height: '0' }
-                }
-            },
-            animation: {
-                'accordion-down': 'accordion-down 0.2s ease-out',
-                'accordion-up': 'accordion-up 0.2s ease-out'
+                'health': '0 4px 20px -2px oklch(var(--primary) / 0.15)',
+                'health-lg': '0 10px 40px -5px oklch(var(--primary) / 0.2)',
             }
         }
     },
     plugins: [typography, containerQueries, animate]
 };
-

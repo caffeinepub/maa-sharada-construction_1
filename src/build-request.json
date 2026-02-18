@@ -1,85 +1,189 @@
 {
   "kind": "build_request",
-  "title": "Add a project gallery section to the Maa Sharada Construction website",
+  "title": "Repurpose site into a smartwatch data import and analytics app",
+  "projectName": "Smartwatch Data Hub",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-8",
-      "text": "Add a new \"Project Gallery\" section to the single-page site to showcase completed construction projects using a responsive photo grid.",
+      "id": "REQ-1",
+      "text": "Replace the current construction-company single-page website UI with a new smartwatch data extension application UI that uses English for all user-facing text.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "Your update is live—would you like to add a project gallery next? yes"
+          "creat the application for the data extension fro the smaar whach"
         ]
       },
       "acceptanceCriteria": [
-        "A new section is rendered on the homepage between Services and Contact (or another clearly intentional placement) and uses a stable section id (e.g., id=\"gallery\") so it can be navigated via scroll.",
-        "The gallery displays at least 6 project images in a responsive grid (1 column on small screens, increasing on larger breakpoints).",
-        "Clicking/tapping an image opens an in-page preview (modal/dialog or equivalent) with the larger image and a close control; ESC closes the preview.",
-        "All images have meaningful alt text and do not break layout while loading (use fixed aspect ratio containers and object-fit).",
-        "All gallery image src paths are relative and compatible with IC deployment (consistent with existing \"./assets/generated/...\" usage)."
+        "The app no longer shows Maa Sharada Construction branding, Hindi content, construction services, or the construction project gallery.",
+        "All visible UI strings are in English.",
+        "Navigation and page content reflect smartwatch data import/extension use cases (e.g., Import, Dashboard, Records, Export)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement a smartwatch data import flow that allows a user to upload a data export file (CSV and JSON) in the browser, validates it, and previews parsed records before saving.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "creat the application for the data extension fro the smaar whach"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can choose a local file and the UI accepts at least .csv and .json.",
+        "UI shows clear validation errors for unsupported file types and malformed content.",
+        "UI displays a preview table (first N rows/items) including at minimum timestamp plus any detected metrics fields.",
+        "User can confirm to save, or cancel without saving."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add backend storage for imported smartwatch datasets per authenticated user (Internet Identity Principal), including dataset metadata (name, upload time, original format) and the imported records.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "creat the application for the data extension fro the smaar whach"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes methods to create a dataset, list datasets for the calling Principal, fetch a dataset (metadata + records), and delete a dataset.",
+        "Data is isolated per caller Principal (a user cannot read another user’s datasets).",
+        "Imported records persist across page refresh and redeploy (stable storage)."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Define and implement a minimal, safe data model for smartwatch records that supports common metrics and remains extensible (e.g., timestamp plus optional fields like steps, heartRate, calories, distance, sleep).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "creat the application for the data extension fro the smaar whach"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A record always includes a timestamp; metric fields are optional.",
+        "Frontend import parser maps CSV/JSON fields into the model with reasonable defaults and clearly flags unmapped fields.",
+        "The model supports storing additional key/value metric fields without breaking older datasets (extensible)."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Create a dashboard that computes and displays “extended” (derived) metrics from the imported data (e.g., daily totals, averages, min/max for heart rate, step totals by day) and allows filtering by date range.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "creat the application for the data extension fro the smaar whach"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Dashboard shows at least: total steps in range, average heart rate (if present), and min/max heart rate (if present).",
+        "User can select a date range and the dashboard updates accordingly.",
+        "When a metric is not present in a dataset, the UI gracefully indicates it is unavailable (no crashes/NaN displays)."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Add an export feature that lets the user download the extended/normalized dataset as a JSON file from the browser (no external services).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "creat the application for the data extension fro the smaar whach"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can click Export on a dataset and receive a downloaded .json file.",
+        "Export includes dataset metadata and the normalized records (including any derived fields if the UI computes them).",
+        "Export works offline after the dataset has been loaded (no dependency on third-party APIs)."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Add basic dataset management UI: list datasets, view details for a selected dataset (records + summary), and delete a dataset with confirmation.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "creat the application for the data extension fro the smaar whach"
+        ]
+      },
+      "acceptanceCriteria": [
+        "There is a datasets list view showing dataset name and upload time.",
+        "Selecting a dataset shows details (summary + records preview/table).",
+        "Deleting prompts for confirmation and removes the dataset from both UI and backend storage."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Apply a coherent visual theme suitable for a health/fitness data product (consistent colors, typography, spacing, and components) and use it across all new screens.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "creat the application for the data extension fro the smaar whach"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All screens share a consistent layout system (header/nav, content container, cards/tables).",
+        "Theme avoids construction-specific imagery/colors and looks appropriate for fitness/health data.",
+        "Interactive states (hover/focus/disabled) are consistent across buttons, inputs, and table controls."
       ]
     },
     {
       "id": "REQ-9",
-      "text": "Update site navigation (header and footer quick links) to include the new Project Gallery section and ensure smooth-scroll navigation works for it on desktop and mobile.",
+      "text": "Add required generated images to the project and render them in the UI as static assets from frontend/public/assets/generated.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "Your update is live—would you like to add a project gallery next? yes"
+          "creat the application for the data extension fro the smaar whach"
         ]
       },
       "acceptanceCriteria": [
-        "Header navigation includes a new item that scrolls smoothly to the gallery section and closes the mobile drawer after selection (matching existing behavior).",
-        "Footer “Quick Links” includes a new link/button that scrolls smoothly to the gallery section (matching existing behavior).",
-        "After navigation to the gallery, the section heading is not hidden behind the sticky header (existing scroll-margin behavior continues to apply)."
-      ]
-    },
-    {
-      "id": "REQ-10",
-      "text": "Ensure the new Project Gallery section matches the existing site theme (spacing, typography, card styles, and hover states) and looks good on mobile and desktop.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Your update is live—would you like to add a project gallery next? yes"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Gallery section styling is consistent with the existing construction-themed design system (Tailwind tokens, border/shadow patterns similar to other sections).",
-        "The section includes a clear heading and short description consistent with other sections’ structure and spacing.",
-        "No regressions to existing sections (Hero, Services, Contact, Footer) and the page remains visually coherent end-to-end."
+        "New generated images are referenced via relative paths from the frontend (e.g., ./assets/generated/...).",
+        "Images render correctly in the deployed build (no broken paths)."
       ]
     }
   ],
   "constraints": [
-    "Frontend immutable paths must not be edited: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui.",
-    "Do not add third-party authentication providers; Internet Identity is the only supported auth mechanism (not required for this gallery).",
-    "Keep the app deployable to the Internet Computer with relative asset paths (consistent with current \"./assets/...\" usage).",
-    "Backend must remain a single Motoko actor; no new backend is required for a static gallery."
+    "Backend must remain a single Motoko actor in backend/main.mo.",
+    "Do not edit files under frontend/src/components/ui (compose existing UI components instead).",
+    "Do not edit frontend/src/hooks/useInternetIdentity.ts / useInternetIdentity.tsx or frontend/src/hooks/useActor.ts; integrate with them as-is.",
+    "No external databases or third-party backend services.",
+    "No direct smartwatch pairing/sync (Bluetooth, vendor APIs) is included; data is imported via user-uploaded files."
   ],
   "nonGoals": [
-    "Do not build an admin panel or CMS for managing gallery items.",
-    "Do not implement image uploads from the browser or store images on the backend.",
-    "Do not add real-time features (e.g., websockets) or external databases.",
-    "Do not change existing contact details, services content, or deployment workflow unless required for the gallery links/section placement."
+    "Building a native Android/Play Store app.",
+    "Real-time sync from a smartwatch.",
+    "Tracking a person’s real-world location or identifying a person from device data.",
+    "Integrations with third-party health platforms (Google Fit, Apple Health, Fitbit cloud APIs)."
   ],
   "imageRequirements": {
     "required": [
-      "Construction project photo: newly built single-family house exterior in warm daylight (maa-sharada-gallery-01.dim_1200x800.png)",
-      "Construction project photo: boundary wall construction with masonry detail (maa-sharada-gallery-02.dim_1200x800.png)",
-      "Construction project photo: interior tiling work close-up with clean grout lines (maa-sharada-gallery-03.dim_1200x800.png)",
-      "Construction project photo: door and window installation scene, modern finish (maa-sharada-gallery-04.dim_1200x800.png)",
-      "Construction project photo: roof slab centering/shuttering work on site (maa-sharada-gallery-05.dim_1200x800.png)",
-      "Construction project photo: electrical wiring installation in a residential interior (maa-sharada-gallery-06.dim_1200x800.png)"
+      "Minimal smartwatch + chart mark icon in flat style (smartwatch-datahub-logo.dim_512x512.png)",
+      "Abstract fitness data dashboard hero illustration with charts and a smartwatch silhouette (smartwatch-datahub-hero.dim_1600x900.png)"
     ],
     "edits": []
   },
@@ -87,7 +191,7 @@
     "goalsToAdd": [],
     "goalsToRemove": [],
     "preferencesToAdd": [
-      "Use English for any user-facing text in build requests/specifications."
+      "Use English for all user-facing text in this build."
     ],
     "preferencesToRemove": [],
     "miscToAdd": [],

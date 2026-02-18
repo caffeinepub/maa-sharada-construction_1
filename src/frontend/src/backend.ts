@@ -89,10 +89,361 @@ export class ExternalBlob {
         return this;
     }
 }
-export interface backendInterface {
+export interface SmartwatchDataset {
+    records: Array<SmartwatchRecord>;
+    originalFormat: string;
+    name: string;
+    uploadTime: Time;
 }
+export type Time = bigint;
+export interface UserProfile {
+    name: string;
+}
+export interface SmartwatchRecord {
+    calories?: number;
+    distance?: number;
+    sleep?: bigint;
+    steps?: bigint;
+    heartRate?: bigint;
+    timestamp: Time;
+}
+export enum UserRole {
+    admin = "admin",
+    user = "user",
+    guest = "guest"
+}
+export interface backendInterface {
+    _initializeAccessControlWithSecret(userSecret: string): Promise<void>;
+    addSmartwatchDataset(dataset: SmartwatchDataset): Promise<void>;
+    assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
+    filterDatasetsByMetric(metric: string, minValue: number | null, maxValue: number | null): Promise<Array<SmartwatchDataset>>;
+    getAllUserDatasets(): Promise<Array<SmartwatchDataset>>;
+    getCallerUserProfile(): Promise<UserProfile | null>;
+    getCallerUserRole(): Promise<UserRole>;
+    getMyDatasets(): Promise<Array<SmartwatchDataset>>;
+    getUserDatasets(user: Principal): Promise<Array<SmartwatchDataset>>;
+    getUserProfile(user: Principal): Promise<UserProfile | null>;
+    isCallerAdmin(): Promise<boolean>;
+    saveCallerUserProfile(profile: UserProfile): Promise<void>;
+}
+import type { SmartwatchDataset as _SmartwatchDataset, SmartwatchRecord as _SmartwatchRecord, Time as _Time, UserProfile as _UserProfile, UserRole as _UserRole } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
+    async _initializeAccessControlWithSecret(arg0: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor._initializeAccessControlWithSecret(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor._initializeAccessControlWithSecret(arg0);
+            return result;
+        }
+    }
+    async addSmartwatchDataset(arg0: SmartwatchDataset): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.addSmartwatchDataset(to_candid_SmartwatchDataset_n1(this._uploadFile, this._downloadFile, arg0));
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.addSmartwatchDataset(to_candid_SmartwatchDataset_n1(this._uploadFile, this._downloadFile, arg0));
+            return result;
+        }
+    }
+    async assignCallerUserRole(arg0: Principal, arg1: UserRole): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.assignCallerUserRole(arg0, to_candid_UserRole_n6(this._uploadFile, this._downloadFile, arg1));
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.assignCallerUserRole(arg0, to_candid_UserRole_n6(this._uploadFile, this._downloadFile, arg1));
+            return result;
+        }
+    }
+    async filterDatasetsByMetric(arg0: string, arg1: number | null, arg2: number | null): Promise<Array<SmartwatchDataset>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.filterDatasetsByMetric(arg0, to_candid_opt_n8(this._uploadFile, this._downloadFile, arg1), to_candid_opt_n8(this._uploadFile, this._downloadFile, arg2));
+                return from_candid_vec_n9(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.filterDatasetsByMetric(arg0, to_candid_opt_n8(this._uploadFile, this._downloadFile, arg1), to_candid_opt_n8(this._uploadFile, this._downloadFile, arg2));
+            return from_candid_vec_n9(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getAllUserDatasets(): Promise<Array<SmartwatchDataset>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getAllUserDatasets();
+                return from_candid_vec_n9(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getAllUserDatasets();
+            return from_candid_vec_n9(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getCallerUserProfile(): Promise<UserProfile | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getCallerUserProfile();
+                return from_candid_opt_n17(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getCallerUserProfile();
+            return from_candid_opt_n17(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getCallerUserRole(): Promise<UserRole> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getCallerUserRole();
+                return from_candid_UserRole_n18(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getCallerUserRole();
+            return from_candid_UserRole_n18(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getMyDatasets(): Promise<Array<SmartwatchDataset>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getMyDatasets();
+                return from_candid_vec_n9(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getMyDatasets();
+            return from_candid_vec_n9(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getUserDatasets(arg0: Principal): Promise<Array<SmartwatchDataset>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getUserDatasets(arg0);
+                return from_candid_vec_n9(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getUserDatasets(arg0);
+            return from_candid_vec_n9(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getUserProfile(arg0: Principal): Promise<UserProfile | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getUserProfile(arg0);
+                return from_candid_opt_n17(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getUserProfile(arg0);
+            return from_candid_opt_n17(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async isCallerAdmin(): Promise<boolean> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.isCallerAdmin();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.isCallerAdmin();
+            return result;
+        }
+    }
+    async saveCallerUserProfile(arg0: UserProfile): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.saveCallerUserProfile(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.saveCallerUserProfile(arg0);
+            return result;
+        }
+    }
+}
+function from_candid_SmartwatchDataset_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _SmartwatchDataset): SmartwatchDataset {
+    return from_candid_record_n11(_uploadFile, _downloadFile, value);
+}
+function from_candid_SmartwatchRecord_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _SmartwatchRecord): SmartwatchRecord {
+    return from_candid_record_n14(_uploadFile, _downloadFile, value);
+}
+function from_candid_UserRole_n18(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserRole): UserRole {
+    return from_candid_variant_n19(_uploadFile, _downloadFile, value);
+}
+function from_candid_opt_n15(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [number]): number | null {
+    return value.length === 0 ? null : value[0];
+}
+function from_candid_opt_n16(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [bigint]): bigint | null {
+    return value.length === 0 ? null : value[0];
+}
+function from_candid_opt_n17(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_UserProfile]): UserProfile | null {
+    return value.length === 0 ? null : value[0];
+}
+function from_candid_record_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    records: Array<_SmartwatchRecord>;
+    originalFormat: string;
+    name: string;
+    uploadTime: _Time;
+}): {
+    records: Array<SmartwatchRecord>;
+    originalFormat: string;
+    name: string;
+    uploadTime: Time;
+} {
+    return {
+        records: from_candid_vec_n12(_uploadFile, _downloadFile, value.records),
+        originalFormat: value.originalFormat,
+        name: value.name,
+        uploadTime: value.uploadTime
+    };
+}
+function from_candid_record_n14(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    calories: [] | [number];
+    distance: [] | [number];
+    sleep: [] | [bigint];
+    steps: [] | [bigint];
+    heartRate: [] | [bigint];
+    timestamp: _Time;
+}): {
+    calories?: number;
+    distance?: number;
+    sleep?: bigint;
+    steps?: bigint;
+    heartRate?: bigint;
+    timestamp: Time;
+} {
+    return {
+        calories: record_opt_to_undefined(from_candid_opt_n15(_uploadFile, _downloadFile, value.calories)),
+        distance: record_opt_to_undefined(from_candid_opt_n15(_uploadFile, _downloadFile, value.distance)),
+        sleep: record_opt_to_undefined(from_candid_opt_n16(_uploadFile, _downloadFile, value.sleep)),
+        steps: record_opt_to_undefined(from_candid_opt_n16(_uploadFile, _downloadFile, value.steps)),
+        heartRate: record_opt_to_undefined(from_candid_opt_n16(_uploadFile, _downloadFile, value.heartRate)),
+        timestamp: value.timestamp
+    };
+}
+function from_candid_variant_n19(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    admin: null;
+} | {
+    user: null;
+} | {
+    guest: null;
+}): UserRole {
+    return "admin" in value ? UserRole.admin : "user" in value ? UserRole.user : "guest" in value ? UserRole.guest : value;
+}
+function from_candid_vec_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_SmartwatchRecord>): Array<SmartwatchRecord> {
+    return value.map((x)=>from_candid_SmartwatchRecord_n13(_uploadFile, _downloadFile, x));
+}
+function from_candid_vec_n9(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_SmartwatchDataset>): Array<SmartwatchDataset> {
+    return value.map((x)=>from_candid_SmartwatchDataset_n10(_uploadFile, _downloadFile, x));
+}
+function to_candid_SmartwatchDataset_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: SmartwatchDataset): _SmartwatchDataset {
+    return to_candid_record_n2(_uploadFile, _downloadFile, value);
+}
+function to_candid_SmartwatchRecord_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: SmartwatchRecord): _SmartwatchRecord {
+    return to_candid_record_n5(_uploadFile, _downloadFile, value);
+}
+function to_candid_UserRole_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): _UserRole {
+    return to_candid_variant_n7(_uploadFile, _downloadFile, value);
+}
+function to_candid_opt_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: number | null): [] | [number] {
+    return value === null ? candid_none() : candid_some(value);
+}
+function to_candid_record_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    records: Array<SmartwatchRecord>;
+    originalFormat: string;
+    name: string;
+    uploadTime: Time;
+}): {
+    records: Array<_SmartwatchRecord>;
+    originalFormat: string;
+    name: string;
+    uploadTime: _Time;
+} {
+    return {
+        records: to_candid_vec_n3(_uploadFile, _downloadFile, value.records),
+        originalFormat: value.originalFormat,
+        name: value.name,
+        uploadTime: value.uploadTime
+    };
+}
+function to_candid_record_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    calories?: number;
+    distance?: number;
+    sleep?: bigint;
+    steps?: bigint;
+    heartRate?: bigint;
+    timestamp: Time;
+}): {
+    calories: [] | [number];
+    distance: [] | [number];
+    sleep: [] | [bigint];
+    steps: [] | [bigint];
+    heartRate: [] | [bigint];
+    timestamp: _Time;
+} {
+    return {
+        calories: value.calories ? candid_some(value.calories) : candid_none(),
+        distance: value.distance ? candid_some(value.distance) : candid_none(),
+        sleep: value.sleep ? candid_some(value.sleep) : candid_none(),
+        steps: value.steps ? candid_some(value.steps) : candid_none(),
+        heartRate: value.heartRate ? candid_some(value.heartRate) : candid_none(),
+        timestamp: value.timestamp
+    };
+}
+function to_candid_variant_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): {
+    admin: null;
+} | {
+    user: null;
+} | {
+    guest: null;
+} {
+    return value == UserRole.admin ? {
+        admin: null
+    } : value == UserRole.user ? {
+        user: null
+    } : value == UserRole.guest ? {
+        guest: null
+    } : value;
+}
+function to_candid_vec_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<SmartwatchRecord>): Array<_SmartwatchRecord> {
+    return value.map((x)=>to_candid_SmartwatchRecord_n4(_uploadFile, _downloadFile, x));
 }
 export interface CreateActorOptions {
     agent?: Agent;

@@ -8,10 +8,110 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
-export const idlService = IDL.Service({});
+export const Time = IDL.Int;
+export const SmartwatchRecord = IDL.Record({
+  'calories' : IDL.Opt(IDL.Float64),
+  'distance' : IDL.Opt(IDL.Float64),
+  'sleep' : IDL.Opt(IDL.Nat),
+  'steps' : IDL.Opt(IDL.Nat),
+  'heartRate' : IDL.Opt(IDL.Nat),
+  'timestamp' : Time,
+});
+export const SmartwatchDataset = IDL.Record({
+  'records' : IDL.Vec(SmartwatchRecord),
+  'originalFormat' : IDL.Text,
+  'name' : IDL.Text,
+  'uploadTime' : Time,
+});
+export const UserRole = IDL.Variant({
+  'admin' : IDL.Null,
+  'user' : IDL.Null,
+  'guest' : IDL.Null,
+});
+export const UserProfile = IDL.Record({ 'name' : IDL.Text });
+
+export const idlService = IDL.Service({
+  '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'addSmartwatchDataset' : IDL.Func([SmartwatchDataset], [], []),
+  'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+  'filterDatasetsByMetric' : IDL.Func(
+      [IDL.Text, IDL.Opt(IDL.Float64), IDL.Opt(IDL.Float64)],
+      [IDL.Vec(SmartwatchDataset)],
+      ['query'],
+    ),
+  'getAllUserDatasets' : IDL.Func([], [IDL.Vec(SmartwatchDataset)], ['query']),
+  'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+  'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getMyDatasets' : IDL.Func([], [IDL.Vec(SmartwatchDataset)], ['query']),
+  'getUserDatasets' : IDL.Func(
+      [IDL.Principal],
+      [IDL.Vec(SmartwatchDataset)],
+      ['query'],
+    ),
+  'getUserProfile' : IDL.Func(
+      [IDL.Principal],
+      [IDL.Opt(UserProfile)],
+      ['query'],
+    ),
+  'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+});
 
 export const idlInitArgs = [];
 
-export const idlFactory = ({ IDL }) => { return IDL.Service({}); };
+export const idlFactory = ({ IDL }) => {
+  const Time = IDL.Int;
+  const SmartwatchRecord = IDL.Record({
+    'calories' : IDL.Opt(IDL.Float64),
+    'distance' : IDL.Opt(IDL.Float64),
+    'sleep' : IDL.Opt(IDL.Nat),
+    'steps' : IDL.Opt(IDL.Nat),
+    'heartRate' : IDL.Opt(IDL.Nat),
+    'timestamp' : Time,
+  });
+  const SmartwatchDataset = IDL.Record({
+    'records' : IDL.Vec(SmartwatchRecord),
+    'originalFormat' : IDL.Text,
+    'name' : IDL.Text,
+    'uploadTime' : Time,
+  });
+  const UserRole = IDL.Variant({
+    'admin' : IDL.Null,
+    'user' : IDL.Null,
+    'guest' : IDL.Null,
+  });
+  const UserProfile = IDL.Record({ 'name' : IDL.Text });
+  
+  return IDL.Service({
+    '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'addSmartwatchDataset' : IDL.Func([SmartwatchDataset], [], []),
+    'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+    'filterDatasetsByMetric' : IDL.Func(
+        [IDL.Text, IDL.Opt(IDL.Float64), IDL.Opt(IDL.Float64)],
+        [IDL.Vec(SmartwatchDataset)],
+        ['query'],
+      ),
+    'getAllUserDatasets' : IDL.Func(
+        [],
+        [IDL.Vec(SmartwatchDataset)],
+        ['query'],
+      ),
+    'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+    'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getMyDatasets' : IDL.Func([], [IDL.Vec(SmartwatchDataset)], ['query']),
+    'getUserDatasets' : IDL.Func(
+        [IDL.Principal],
+        [IDL.Vec(SmartwatchDataset)],
+        ['query'],
+      ),
+    'getUserProfile' : IDL.Func(
+        [IDL.Principal],
+        [IDL.Opt(UserProfile)],
+        ['query'],
+      ),
+    'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  });
+};
 
 export const init = ({ IDL }) => { return []; };

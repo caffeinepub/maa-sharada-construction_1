@@ -1,105 +1,318 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Project Gallery section for Maa Sharada Construction single-page site",
+  "title": "Smartwatch Data Hub — Frontend Repurpose, Import, Analytics, Export, and Dataset UI",
   "requirements": [
     {
-      "id": "REQ-8",
-      "summary": "Add a new Project Gallery section on the homepage with a responsive photo grid and in-page image preview modal.",
+      "id": "REQ-1",
+      "summary": "Replace the construction single-page site with an English smartwatch data import/analytics UI featuring Import, Dashboard, Records, and Export navigation.",
       "acceptanceCriteria": [
-        "A new section is rendered on the homepage between Services and Contact (or another clearly intentional placement) and uses a stable section id (e.g., id=\"gallery\") so it can be navigated via scroll.",
-        "The gallery displays at least 6 project images in a responsive grid (1 column on small screens, increasing on larger breakpoints).",
-        "Clicking/tapping an image opens an in-page preview (modal/dialog or equivalent) with the larger image and a close control; ESC closes the preview.",
-        "All images have meaningful alt text and do not break layout while loading (use fixed aspect ratio containers and object-fit).",
-        "All gallery image src paths are relative and compatible with IC deployment (consistent with existing \"./assets/generated/...\" usage)."
+        "The app no longer shows Maa Sharada Construction branding, Hindi content, construction services, or the construction project gallery.",
+        "All visible UI strings are in English.",
+        "Navigation and page content reflect smartwatch data import/extension use cases (e.g., Import, Dashboard, Records, Export)."
       ],
       "file_operations": [
         {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Replace the single-page construction sections composition with the Smartwatch Data Hub app shell (header + authenticated content area) and wire in the required screens (Import, Dashboard, Records/Datasets, Export actions). Use existing shadcn-ui components for layout primitives; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/site/Header.tsx",
+          "operation": "modify",
+          "description": "Repurpose header into Smartwatch Data Hub top navigation (Import, Dashboard, Datasets/Records) and add authentication controls using the existing Internet Identity hook (without modifying that hook). Use shadcn-ui Button/Sheet (and other existing ui components as needed); verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/site/HeroSection.tsx",
+          "operation": "delete",
+          "description": "Remove construction hero section component (no longer used in the repurposed app)."
+        },
+        {
+          "path": "frontend/src/components/site/ServicesSection.tsx",
+          "operation": "delete",
+          "description": "Remove construction services section component (no longer used in the repurposed app)."
+        },
+        {
           "path": "frontend/src/components/site/ProjectGallerySection.tsx",
+          "operation": "delete",
+          "description": "Remove construction project gallery section component (no longer used in the repurposed app)."
+        },
+        {
+          "path": "frontend/src/components/site/ContactSection.tsx",
+          "operation": "delete",
+          "description": "Remove construction contact/CTA section component (no longer used in the repurposed app)."
+        },
+        {
+          "path": "frontend/src/components/site/Footer.tsx",
+          "operation": "modify",
+          "description": "Replace construction-specific footer content with a minimal English product footer for Smartwatch Data Hub (privacy-minded wording, no construction contact details)."
+        },
+        {
+          "path": "frontend/src/components/auth/AuthGate.tsx",
           "operation": "create",
-          "description": "Create a new ProjectGallerySection component rendering a themed section with id=\"gallery\", heading + short description, and a responsive grid of 6 images. Use fixed-aspect-ratio containers with object-fit to prevent layout shifts while loading; implement an in-page preview modal with overlay + close button and ESC-to-close behavior. Ensure image src values use relative paths consistent with the site (e.g., ./assets/generated/...). Use shadcn-ui Card/Button styling patterns already used in the site to match theme. Verify the component's usage instructions before implementing."
+          "description": "Create an authentication gate that requires Internet Identity login before showing any datasets or analytics (guests see a friendly sign-in required screen). Use the existing useInternetIdentity and useActor hooks as-is. Use shadcn-ui Card/Button for the access prompt UI; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/ProfileSetupDialog.tsx",
+          "operation": "create",
+          "description": "Create a first-login profile setup dialog that prompts for a display name and saves it via the backend user-profile capability. Use the authorization component guidance to avoid 'modal flash' and to clear cached data on logout (handled where appropriate in UI). Use shadcn-ui Dialog/Input/Button; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Implement in-browser CSV/JSON upload, validation, parsing, preview, and confirm/cancel before saving imported records.",
+      "acceptanceCriteria": [
+        "User can choose a local file and the UI accepts at least .csv and .json.",
+        "UI shows clear validation errors for unsupported file types and malformed content.",
+        "UI displays a preview table (first N rows/items) including at minimum timestamp plus any detected metrics fields.",
+        "User can confirm to save, or cancel without saving."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/import/ImportPage.tsx",
+          "operation": "create",
+          "description": "Create the Import screen UI with file picker (CSV/JSON), validation messaging, parsed preview table (first N items), dataset naming input, and Confirm Save / Cancel actions. Use shadcn-ui Input/Button/Card/Table/Alert components for consistent UI; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/lib/smartwatch/importParsers.ts",
+          "operation": "create",
+          "description": "Implement CSV and JSON parsing utilities for smartwatch exports (type checking, timestamp parsing, numeric coercion), returning normalized records + warnings suitable for UI display (e.g., unmapped fields)."
+        },
+        {
+          "path": "frontend/src/hooks/useSmartwatchDatasets.ts",
+          "operation": "create",
+          "description": "Add React Query hooks for dataset actions used by Import (create/save) and for later listing/reloading (integrate with the actor provided by useActor without modifying it). Ensure errors (including authorization traps) are surfaced as user-friendly messages."
+        },
+        {
+          "path": "frontend/src/features/import/ImportPreviewTable.tsx",
+          "operation": "create",
+          "description": "Create a reusable preview table component for parsed records, showing timestamp and detected metric columns and highlighting missing/unparseable values gracefully. Use shadcn-ui Table components; verify the component's usage instructions before implementing."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Wire the new ProjectGallerySection into the single-page layout between ServicesSection and ContactSection (or other clearly intentional placement) so it appears on the homepage and can be reached by scroll navigation."
+          "description": "Wire the new Import screen into the main app navigation/view switching so it is reachable and becomes the primary entry screen after authentication."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Implement a minimal, extensible smartwatch record model in the frontend and map CSV/JSON fields into it with clear unmapped-field warnings.",
+      "acceptanceCriteria": [
+        "A record always includes a timestamp; metric fields are optional.",
+        "Frontend import parser maps CSV/JSON fields into the model with reasonable defaults and clearly flags unmapped fields.",
+        "The model supports storing additional key/value metric fields without breaking older datasets (extensible)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/lib/smartwatch/model.ts",
+          "operation": "create",
+          "description": "Define frontend-facing types/helpers that align with the backend SmartwatchRecord/SmartwatchDataset while remaining extensible in UI (e.g., supporting additional detected metrics for preview/export). Keep timestamp mandatory and all metrics optional."
         },
         {
-          "path": "frontend/public/assets/generated/maa-sharada-gallery-01.dim_1200x800.png",
+          "path": "frontend/src/lib/smartwatch/fieldMapping.ts",
           "operation": "create",
-          "description": "Add generated gallery image asset for the Project Gallery section (static file referenced via relative src)."
+          "description": "Implement field normalization/mapping rules for common smartwatch export columns/keys (timestamp variants, steps, heart rate, calories, distance, sleep) and generate a list of unmapped source fields for display in the Import UI."
         },
         {
-          "path": "frontend/public/assets/generated/maa-sharada-gallery-02.dim_1200x800.png",
+          "path": "frontend/src/features/import/ImportPage.tsx",
+          "operation": "modify",
+          "description": "Integrate the model + mapping utilities into the import flow to ensure timestamp is required, optional metrics are handled safely, and unmapped fields are shown as warnings (not blocking unless content is malformed). Use shadcn-ui Alert/Badge components for warnings; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Create a dashboard that computes derived metrics and supports date-range filtering with graceful handling of missing metrics.",
+      "acceptanceCriteria": [
+        "Dashboard shows at least: total steps in range, average heart rate (if present), and min/max heart rate (if present).",
+        "User can select a date range and the dashboard updates accordingly.",
+        "When a metric is not present in a dataset, the UI gracefully indicates it is unavailable (no crashes/NaN displays)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/dashboard/DashboardPage.tsx",
           "operation": "create",
-          "description": "Add generated gallery image asset for the Project Gallery section (static file referenced via relative src)."
+          "description": "Create the Dashboard screen that selects a dataset, allows filtering by date range, and displays derived metrics cards (total steps, avg/min/max heart rate when present) with 'Unavailable' states when a metric is absent. Use shadcn-ui Card/Input/Button/Select components; verify the component's usage instructions before implementing."
         },
         {
-          "path": "frontend/public/assets/generated/maa-sharada-gallery-03.dim_1200x800.png",
+          "path": "frontend/src/lib/smartwatch/analytics.ts",
           "operation": "create",
-          "description": "Add generated gallery image asset for the Project Gallery section (static file referenced via relative src)."
+          "description": "Implement pure functions to compute derived metrics (date-range filtering, daily bucketing, totals/averages/min/max) with safe handling of missing/undefined fields to avoid NaN or crashes."
         },
         {
-          "path": "frontend/public/assets/generated/maa-sharada-gallery-04.dim_1200x800.png",
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the Dashboard screen into the main app navigation/view switching so it is reachable after login."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Add a browser-only export feature to download normalized/extended dataset JSON (including metadata and derived fields computed in UI).",
+      "acceptanceCriteria": [
+        "User can click Export on a dataset and receive a downloaded .json file.",
+        "Export includes dataset metadata and the normalized records (including any derived fields if the UI computes them).",
+        "Export works offline after the dataset has been loaded (no dependency on third-party APIs)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/lib/smartwatch/exportJson.ts",
           "operation": "create",
-          "description": "Add generated gallery image asset for the Project Gallery section (static file referenced via relative src)."
+          "description": "Implement JSON export builder + browser download helper (Blob + object URL) that packages dataset metadata, normalized records, and optional derived fields (if available from UI analytics computations) without relying on external services."
         },
         {
-          "path": "frontend/public/assets/generated/maa-sharada-gallery-05.dim_1200x800.png",
+          "path": "frontend/src/features/datasets/ExportDatasetButton.tsx",
           "operation": "create",
-          "description": "Add generated gallery image asset for the Project Gallery section (static file referenced via relative src)."
+          "description": "Create an Export button component that uses already-loaded dataset data to generate and download a .json file offline. Use shadcn-ui Button/DropdownMenu if needed; verify the component's usage instructions before implementing."
         },
         {
-          "path": "frontend/public/assets/generated/maa-sharada-gallery-06.dim_1200x800.png",
+          "path": "frontend/src/features/datasets/DatasetDetailsPage.tsx",
+          "operation": "modify",
+          "description": "Add Export action to dataset details view to trigger the download and ensure exported JSON includes metadata + normalized records + any computed derived fields available in the UI."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Add dataset management UI: list datasets, view dataset details (records + summary), and delete datasets with confirmation.",
+      "acceptanceCriteria": [
+        "There is a datasets list view showing dataset name and upload time.",
+        "Selecting a dataset shows details (summary + records preview/table).",
+        "Deleting prompts for confirmation and removes the dataset from both UI and backend storage."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/datasets/DatasetsPage.tsx",
           "operation": "create",
-          "description": "Add generated gallery image asset for the Project Gallery section (static file referenced via relative src)."
+          "description": "Create a Datasets (Records) screen that lists the caller's datasets (name + upload time), supports selection, and navigates within the app view state to details. Use shadcn-ui Table/Card/Button; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/datasets/DatasetDetailsPage.tsx",
+          "operation": "create",
+          "description": "Create a dataset details view showing metadata, summary metrics, and a records preview table. Provide actions for Export and Delete with confirmation. Use shadcn-ui Dialog/Table/Badge components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/datasets/DeleteDatasetDialog.tsx",
+          "operation": "create",
+          "description": "Implement a delete confirmation dialog and wire it to the backend delete capability (to be provided alongside backend storage), updating React Query cache to remove the dataset from UI after success. Use shadcn-ui Dialog/Button; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useSmartwatchDatasets.ts",
+          "operation": "modify",
+          "description": "Extend dataset hooks to support: list datasets for the authenticated user, and delete a dataset (using the backend delete capability once available), with optimistic UI or cache invalidation and graceful authorization/error handling."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the Datasets (Records) screen and Dataset Details view into the main app navigation/view switching so they are reachable."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Apply a coherent health/fitness visual theme and consistent layout/components across the new application screens.",
+      "acceptanceCriteria": [
+        "All screens share a consistent layout system (header/nav, content container, cards/tables).",
+        "Theme avoids construction-specific imagery/colors and looks appropriate for fitness/health data.",
+        "Interactive states (hover/focus/disabled) are consistent across buttons, inputs, and table controls."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Replace the current construction-themed palette variables with a health/fitness-oriented palette, remove construction texture background usage, and update global typography to English-friendly fonts (remove Devanagari-first font choices). Ensure focus/hover states remain consistent via existing Tailwind/shadcn tokens."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Update theme fontFamily settings to remove construction/Hindi-first defaults and align with the new product typography. Keep shadcn token-based color wiring intact."
+        },
+        {
+          "path": "frontend/src/components/layout/AppLayout.tsx",
+          "operation": "create",
+          "description": "Create a reusable layout component (header + container + page title area) used across Import/Dashboard/Datasets screens to enforce consistent spacing, card/table styling, and responsive behavior. Use shadcn-ui components where appropriate; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Adopt the new AppLayout across all screens to ensure consistent look and interaction patterns."
         }
       ]
     },
     {
       "id": "REQ-9",
-      "summary": "Update header and footer navigation to include smooth-scroll links to the Project Gallery section and preserve existing mobile drawer close behavior and header offset handling.",
+      "summary": "Add required generated images and render them as static assets from frontend/public/assets/generated.",
       "acceptanceCriteria": [
-        "Header navigation includes a new item that scrolls smoothly to the gallery section and closes the mobile drawer after selection (matching existing behavior).",
-        "Footer “Quick Links” includes a new link/button that scrolls smoothly to the gallery section (matching existing behavior).",
-        "After navigation to the gallery, the section heading is not hidden behind the sticky header (existing scroll-margin behavior continues to apply)."
+        "New generated images are referenced via relative paths from the frontend (e.g., ./assets/generated/...).",
+        "Images render correctly in the deployed build (no broken paths)."
       ],
       "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/smartwatch-datahub-logo.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated static logo asset at frontend/public/assets/generated/smartwatch-datahub-logo.dim_512x512.png."
+        },
+        {
+          "path": "frontend/public/assets/generated/smartwatch-datahub-hero.dim_1600x900.png",
+          "operation": "create",
+          "description": "Add the generated static hero asset at frontend/public/assets/generated/smartwatch-datahub-hero.dim_1600x900.png."
+        },
         {
           "path": "frontend/src/components/site/Header.tsx",
           "operation": "modify",
-          "description": "Add a new nav item for the gallery section (id \"gallery\") to both desktop and mobile navigation lists, using the existing smooth-scroll helper and ensuring the mobile drawer closes after selection (existing behavior)."
+          "description": "Replace construction logo references with the new static logo at frontend/public/assets/generated/smartwatch-datahub-logo.dim_512x512.png (referenced via a relative path from the frontend)."
         },
         {
-          "path": "frontend/src/components/site/Footer.tsx",
+          "path": "frontend/src/features/import/ImportPage.tsx",
           "operation": "modify",
-          "description": "Add a new Footer Quick Link that smooth-scrolls to the gallery section (id \"gallery\") using the existing scrollToSection behavior."
+          "description": "Render the new hero illustration at frontend/public/assets/generated/smartwatch-datahub-hero.dim_1600x900.png within the Import screen (e.g., header/empty state) using a relative asset path."
         },
         {
-          "path": "frontend/src/components/site/ProjectGallerySection.tsx",
-          "operation": "modify",
-          "description": "Ensure the gallery section heading is not hidden behind the sticky header after smooth-scroll by applying an appropriate scroll-margin-top utility/class consistent with other sections’ behavior. Verify the component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-10",
-      "summary": "Match the new Project Gallery section styling to the existing construction-themed design system and prevent regressions across the page.",
-      "acceptanceCriteria": [
-        "Gallery section styling is consistent with the existing construction-themed design system (Tailwind tokens, border/shadow patterns similar to other sections).",
-        "The section includes a clear heading and short description consistent with other sections’ structure and spacing.",
-        "No regressions to existing sections (Hero, Services, Contact, Footer) and the page remains visually coherent end-to-end."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/site/ProjectGallerySection.tsx",
-          "operation": "modify",
-          "description": "Align spacing, typography, card borders/shadows, and hover states with existing sections (e.g., Services/Contact card patterns and hover shadow-construction). Ensure the section layout looks good on mobile/desktop and integrates coherently with surrounding sections. Verify the component's usage instructions before implementing."
+          "path": "frontend/public/assets/generated/maa-sharada-logo.dim_512x512.png",
+          "operation": "delete",
+          "description": "Remove the old generated construction logo asset to prevent accidental reuse."
         },
         {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Adjust section ordering/spacing only as needed to keep the overall page visually coherent after inserting the new gallery section (no content changes to existing sections)."
+          "path": "frontend/public/assets/generated/maa-sharada-hero.dim_1600x900.png",
+          "operation": "delete",
+          "description": "Remove the old generated construction hero asset to prevent accidental reuse."
+        },
+        {
+          "path": "frontend/public/assets/generated/maa-sharada-texture.dim_1024x1024.png",
+          "operation": "delete",
+          "description": "Remove the old construction texture asset to prevent accidental reuse (theme no longer uses it)."
+        },
+        {
+          "path": "frontend/public/assets/generated/maa-sharada-gallery-01.dim_1200x800.png",
+          "operation": "delete",
+          "description": "Remove old construction gallery asset (no longer needed)."
+        },
+        {
+          "path": "frontend/public/assets/generated/maa-sharada-gallery-02.dim_1200x800.png",
+          "operation": "delete",
+          "description": "Remove old construction gallery asset (no longer needed)."
+        },
+        {
+          "path": "frontend/public/assets/generated/maa-sharada-gallery-03.dim_1200x800.png",
+          "operation": "delete",
+          "description": "Remove old construction gallery asset (no longer needed)."
+        },
+        {
+          "path": "frontend/public/assets/generated/maa-sharada-gallery-04.dim_1200x800.png",
+          "operation": "delete",
+          "description": "Remove old construction gallery asset (no longer needed)."
+        },
+        {
+          "path": "frontend/public/assets/generated/maa-sharada-gallery-05.dim_1200x800.png",
+          "operation": "delete",
+          "description": "Remove old construction gallery asset (no longer needed)."
+        },
+        {
+          "path": "frontend/public/assets/generated/maa-sharada-gallery-06.dim_1200x800.png",
+          "operation": "delete",
+          "description": "Remove old construction gallery asset (no longer needed)."
         }
       ]
     }
